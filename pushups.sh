@@ -1,27 +1,47 @@
 #!/bin/bash
 
-#Setup a volume of the music.
-volume=1
+# Set your name
+name="Troy"
 
-#Generate a random number.
+# Desired volume 1-10
+MyVolume=4;
+
+# Use this range to raise the amount of push-ups.
+range=5;
+
+# Generate a random number.
 randomNum=`echo $RANDOM`;
 
-#Use this range to raise the strength of push-up.
-range=10;
-
-#Generate numbers to do push-ups.
+# Generate numbers to do push-ups.
 pushupNum=`expr $randomNum % $range`;
 pushupNum=`expr $pushupNum + $range`;
 
-#Ocassinally you need someone’s cheer.
+# Ocassinally you need someone’s cheer.
 cheer=`expr $randomNum % $pushupNum`;
 
-#Wake your Mac up.
-osascript -e “set volume ${volume}”;
+# "Grab current volume and mute state"
+VolumeStart=$(osascript -e 'output volume of (get volume settings)')
+VolumeMuted=$(osascript -e 'output muted of (get volume settings)')
 
-#Victoria will tell you how many push-ups to do with pumping music.
-say -v Victoria “Guys be ready to do ${pushupNum} pushups” &
-afplay ~/Music/tiger_edit.mp3 &
+# "Set desired volume and unmute"
+# unmute
+osascript -e "set volume output muted false";
+# fade in volume
+osascript -e "set volume 0"
+SystemVolume=0;
+
+afplay -v 0.4 /Volumes/6TB-RAID1/Multimedia/Music/Amazon-Music/OneRepublic/Native\ \(Deluxe\)\ \[+digital\ booklet\]/01\ -\ Counting\ Stars.mp3 &
+
+for i in $( seq 1 $MyVolume )
+do
+  SystemVolume=$((SystemVolume+10))
+  osascript -e "set volume output volume ${SystemVolume}"
+  sleep .75;
+done
+
+sleep 1;
+#Will tell you how many push-ups to do with pumping music.
+say -v Samantha "$name get ready to do ${pushupNum} pushups"
 
 #This is the part to count and tell you the number of push-ups.
 counter=1;
@@ -30,19 +50,33 @@ while [ $counter -le $pushupNum ]
 do
 if [ $counter -eq $cheer ]
 then
-say -v Victoria “Let’s Go.”;
+say -v Samantha "Let’s Go.";
 fi
-say -v Victoria $counter;
+say -v Samantha $counter;
 sleep 0.5;
 let counter=counter+1;
 done
 
-#Once done, stop music.
+sleep 2;
+say -v Samantha "$name, Great Job!";
+
+# "decrement volume"
+for i in $( seq 1 $MyVolume )
+do
+  SystemVolume=$((SystemVolume-10))
+  osascript -e "set volume output volume ${SystemVolume}"
+  sleep .5;
+done
+
 killall afplay;
-sleep 3;
 
-#Victoria will give you a rewarding message for your achievement.
-say -v Victoria “Good Job Gentlemen”;
-
-#Let your Mac silent again since you will be back to work now.
-osascript -e “set volume 0″;
+#"Reset initial volume sessings"
+if [ $VolumeMuted == 'true' ]
+  then
+    osascript -e "set volume output muted true"
+  fi
+if [ $VolumeMuted == 'false' ]
+  then
+    osascript -e "set volume output muted false"
+  fi
+osascript -e "set volume output volume ${VolumeStart}"
