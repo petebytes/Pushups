@@ -1,19 +1,26 @@
-# Pushups
+# Mac tells you what to do and helps you stay in shape
 
-Modified Mac script that will remind you to do pushups every hour.
-Originally from
-Tindr, we use it to stay awake and keep the blood pumping!
-http://tindr.co/automated-coach-to-let-your-employees-exercise-in-your-office
+Mac script forked from old repo and made some improvements.
 
-Now at Apsion!
+Every hour between 10-20:00 it:
+
+- stores the current volume and mute settings
+- fades in music
+- TELLS you what to do - this is the important part :)
+- fades out music
+- resets volume to initial settings
+
+Here is a post with an mp3 example of how it sounds in action
+https://apsion.com/have-your-mac-tell-you-what-to-do-and-improve-your-health/
 
 To execute every hour between 10-20:00 10AM/8PM
+Want to setup your own schedule http://corntab.com/ is very useful
 
 > crontab -e
 
-And then add the following line:
+Then add the following line to cron
 
-> _/60 10-20 _ \* \* sh sh /directoryToYourFile/pushups.sh
+> \*/60 10-20 \* \* \* sh sh <directoryToYourFile/pushups.sh>
 
-Finally, if you want it to play music, edit the pushups.sh file to point to the mp3 of your choice.
-Note: Keep the & after the mp3 path
+Finally, if you want it to play music, edit the pushups script and replace the path using your own mp3.
+Note: Keep the & following the mp3 path

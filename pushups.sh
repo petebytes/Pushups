@@ -54,7 +54,7 @@ then
 say -v Samantha "Keep going!";
 else
 say -v Samantha $counter;
-sleep 0.75;
+sleep 1;
 fi
 let counter=counter+1;
 done
