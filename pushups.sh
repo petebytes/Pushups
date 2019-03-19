@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Set your name
-name="Troy"
+name="Pete"
 
 # Desired volume 1-10
-MyVolume=4;
+MyVolume=8;
 
 # Use this range to raise the amount of push-ups.
-range=5;
+range=9;
 
 # Generate a random number.
 randomNum=`echo $RANDOM`;
@@ -17,7 +17,8 @@ pushupNum=`expr $randomNum % $range`;
 pushupNum=`expr $pushupNum + $range`;
 
 # Ocassinally you need someone’s cheer.
-cheer=`expr $randomNum % $pushupNum`;
+# cheer=`expr $randomNum % $pushupNum`;
+cheer=$((pushupNum-3));
 
 # "Grab current volume and mute state"
 VolumeStart=$(osascript -e 'output volume of (get volume settings)')
@@ -30,7 +31,7 @@ osascript -e "set volume output muted false";
 osascript -e "set volume 0"
 SystemVolume=0;
 
-afplay -v 0.4 /Volumes/6TB-RAID1/Multimedia/Music/Amazon-Music/OneRepublic/Native\ \(Deluxe\)\ \[+digital\ booklet\]/01\ -\ Counting\ Stars.mp3 &
+afplay -v 0.5 <your path to.mp3> &
 
 for i in $( seq 1 $MyVolume )
 do
@@ -41,24 +42,25 @@ done
 
 sleep 1;
 #Will tell you how many push-ups to do with pumping music.
-say -v Samantha "$name get ready to do ${pushupNum} pushups"
+say -v Samantha "$name get off your ass and do ${pushupNum} pushups"
 
 #This is the part to count and tell you the number of push-ups.
 counter=1;
-sleep 10;
+sleep 20;
 while [ $counter -le $pushupNum ]
 do
 if [ $counter -eq $cheer ]
 then
-say -v Samantha "Let’s Go.";
-fi
+say -v Samantha "Keep going!";
+else
 say -v Samantha $counter;
-sleep 0.5;
+sleep 0.75;
+fi
 let counter=counter+1;
 done
 
 sleep 2;
-say -v Samantha "$name, Great Job!";
+say -v Samantha "Great Job $name!";
 
 # "decrement volume"
 for i in $( seq 1 $MyVolume )
