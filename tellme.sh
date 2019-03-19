@@ -31,7 +31,7 @@ osascript -e "set volume output muted false";
 osascript -e "set volume 0"
 SystemVolume=0;
 
-afplay -v 0.5 <your path to.mp3> &
+afplay -v 0.5 <your-mp3 path and file name.mp3> &
 
 for i in $( seq 1 $MyVolume )
 do

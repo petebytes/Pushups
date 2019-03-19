@@ -20,7 +20,7 @@ Want to setup your own schedule http://corntab.com/ is very useful
 
 Then add the following line to cron
 
-> \*/60 10-20 \* \* \* sh sh <directoryToYourFile/pushups.sh>
+> \*/60 10-20 \* \* \* sh sh <directoryToYourFile/tellme.sh>
 
-Finally, if you want it to play music, edit the pushups script and replace the path using your own mp3.
+Finally, if you want it to play music, edit the tellme script and replace the path using your own mp3.
 Note: Keep the & following the mp3 path
